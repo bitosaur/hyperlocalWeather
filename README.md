@@ -135,6 +135,14 @@ By default the Kindle goes to screensaver after a few minutes, interrupting the 
 - **Older firmware only.** This command works on Kindle Gen 3 (Kindle Keyboard) and similarly aged devices. It does not work on newer Kindles.
 - **Magnetic cases.** If `~ds` seems to have no effect, check whether you are using a magnetic cover — the magnet can continuously trigger the sleep sensor and override the setting.
 
+### If `~ds` doesn't work — Debug Mode method
+
+Some firmware versions require Debug Mode to be active before the screensaver command is recognised.
+
+1. On the **Home screen**, type **`;debugOn`** into the search bar and press **Enter**.
+2. Type **`~disableScreensaver`** and press **Enter**.
+3. Optionally, type **`;debugOff`** and press **Enter** to exit debug mode.
+
 ### Tip
 
 Set the Kindle's browser **bookmark** to `http://<your-server-ip>:5000` so it opens directly to the weather page after each reboot.
