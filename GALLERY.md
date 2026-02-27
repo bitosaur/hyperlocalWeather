@@ -6,7 +6,7 @@ A 2010 Kindle Gen 3 (Kindle Keyboard) repurposed as a live hyperlocal weather di
 
 ## Screen close-up
 
-![Kindle Gen 3 showing the weather display](kindle1.JPG)
+![Kindle Gen 3 showing the weather display](kindle1.jpg)
 
 The e-ink display showing a real reading:
 - **Partly cloudy** condition icon (SVG, rendered natively by the Kindle browser)
@@ -21,6 +21,6 @@ The browser address bar shows `http://mbr:5000/` — the local hostname of the s
 
 ## On the desk
 
-![Kindle on a wooden stand displaying live weather](kindle2.JPG)
+![Kindle on a wooden stand displaying live weather](kindle2.jpg)
 
 The Kindle sits on a wooden desktop stand. The white stacked-disc enclosure visible in the background is the **PWS radiation shield** — the weather station whose readings are being displayed on screen. The device is kept plugged in to avoid battery drain from the always-on screen and active Wi-Fi.
