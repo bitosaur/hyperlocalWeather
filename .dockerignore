@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+.venv/
+
+# Secrets — never bake into image
+secrets.env
+.env
+
+# Git
+.git/
+.gitignore
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

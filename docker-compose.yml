@@ -1,0 +1,10 @@
+services:
+  weather:
+    build: .
+    ports:
+      - "5000:5000"
+    env_file:
+      - secrets.env          # API key, station IDs (never commit this file)
+    environment:
+      REFRESH_INTERVAL: "600"  # Page auto-refresh in seconds; override as needed
+    restart: unless-stopped

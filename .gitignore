@@ -1,0 +1,22 @@
+# Secrets — NEVER commit
+secrets.env
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+.venv/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

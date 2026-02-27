@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="refresh" content="{{ refresh }}">
+  <title>Weather</title>
+  <style type="text/css">
+    body {
+      font-family: serif;
+      margin: 6px 8px;
+      background: #fff;
+      color: #000;
+    }
+    h1 {
+      font-size: 39pt;
+      text-align: center;
+      margin: 0 0 8px 0;
+      border-bottom: 3px solid #000;
+      padding-bottom: 4px;
+      letter-spacing: 2px;
+    }
+
+    /* ---- Top row: icon (left) + feels-like temp (right) ---- */
+    .top-row { width: 100%; border-collapse: collapse; }
+    .icon-td  { width: 36%; text-align: center; vertical-align: middle; }
+    .temp-td  { width: 64%; text-align: right;  vertical-align: middle; padding-right: 4px; }
+
+    .feels-temp  { font-size: 156pt; font-weight: bold; line-height: 0.85; }
+    .feels-label { font-size: 33pt;  text-align: right; margin-top: 2px; color: #444; }
+
+    /* Actual temp + humidity shown below the top row, centered */
+    .feels-detail { font-size: 36pt; text-align: center; margin: 8px 0 4px 0; }
+
+    /* ---- Wind section ---- */
+    .wind-section {
+      margin-top: 10px;
+      border-top: 3px solid #666;
+      padding-top: 10px;
+      text-align: center;
+    }
+
+    /* Compass — same size as before, only visual weight increased */
+    .compass {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      border: 5px solid #000;
+      -webkit-border-radius: 65px;
+      border-radius: 65px;
+      margin: 0 auto;
+    }
+    .cl { position: absolute; font-size: 14pt; font-weight: bold; }
+    .cl-n { top: 3px;    left: 0; right: 0; text-align: center; }
+    .cl-s { bottom: 3px; left: 0; right: 0; text-align: center; }
+    .cl-e { right: 4px;  top: 50%; margin-top: -10px; }
+    .cl-w { left: 4px;   top: 50%; margin-top: -10px; }
+
+    /* Thicker needle */
+    .needle {
+      position: absolute;
+      left: 50%; bottom: 50%;
+      margin-left: -3px;
+      width: 7px; height: 50px;
+      background: #000;
+      -webkit-transform-origin: 50% 100%;
+      transform-origin: 50% 100%;
+    }
+    .needle-head {
+      position: absolute;
+      top: -12px; left: -4px;
+      width: 0; height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 12px solid #000;
+    }
+    .needle-dot {
+      position: absolute;
+      width: 14px; height: 14px;
+      background: #000;
+      -webkit-border-radius: 7px;
+      border-radius: 7px;
+      top: 50%; left: 50%;
+      margin-top: -7px; margin-left: -7px;
+    }
+
+    /* Wind speed numbers */
+    .wind-nums { margin-top: 8px; }
+    .wn { font-size: 36pt; font-weight: bold; }
+    .wu { font-size: 18pt; }
+    .wind-stations { font-size: 22pt; margin-top: 4px; color: #555; }
+
+    /* ---- Today high/low ---- */
+    .daily-section {
+      margin-top: 10px;
+      border-top: 3px solid #666;
+      padding-top: 8px;
+      font-size: 36pt;
+      text-align: center;
+    }
+
+    /* ---- Footer ---- */
+    .footer {
+      font-size: 30pt;
+      text-align: center;
+      margin-top: 10px;
+      border-top: 1px solid #ccc;
+      padding-top: 6px;
+      color: #555;
+    }
+
+    .err { font-size: 30pt; text-align: center; font-style: italic; }
+  </style>
+</head>
+<body>
+
+<h1>WEATHER</h1>
+
+{% if data.error %}<p class="err">{{ data.error }}</p>{% endif %}
+
+<!-- ============================================================
+     TOP ROW: icon (left) + feels-like temperature (right)
+     ============================================================ -->
+<table class="top-row">
+  <tr>
+    <td class="icon-td">
+      {{ data.weather_icon | safe }}
+    </td>
+    <td class="temp-td">
+      <div class="feels-temp">
+        {%- if data.feels_like is not none -%}{{ data.feels_like }}&deg;{%- else -%}--{%- endif -%}
+      </div>
+      <div class="feels-label">feels like</div>
+    </td>
+  </tr>
+</table>
+
+<!-- Actual temp (only when outside 50–80°F) and humidity -->
+<div class="feels-detail">
+  {%- if data.temp is not none and (data.temp < 50 or data.temp > 80) -%}
+    actual&nbsp;{{ data.temp }}&deg;
+    {%- if data.humidity is not none %}&nbsp;&bull;&nbsp;{% endif -%}
+  {%- endif -%}
+  {%- if data.humidity is not none -%}{{ data.humidity }}%&nbsp;RH{%- endif -%}
+</div>
+
+<!-- ============================================================
+     WIND
+     ============================================================ -->
+<div class="wind-section">
+
+  <div class="compass">
+    <span class="cl cl-n">N</span>
+    <span class="cl cl-s">S</span>
+    <span class="cl cl-e">E</span>
+    <span class="cl cl-w">W</span>
+    {% if data.wind_dir_deg is not none %}
+    <div class="needle"
+         style="-webkit-transform:rotate({{ data.wind_dir_deg }}deg);
+                transform:rotate({{ data.wind_dir_deg }}deg);">
+      <div class="needle-head"></div>
+    </div>
+    <div class="needle-dot"></div>
+    {% endif %}
+  </div>
+
+  <div class="wind-nums">
+    {% if data.wind_speed_avg is not none -%}
+      <span class="wn">{{ data.wind_speed_avg }}</span><span class="wu">&nbsp;mph</span>
+    {%- else -%}
+      <span class="wn">--</span>
+    {%- endif %}
+    &nbsp;&nbsp;
+    {% if data.wind_gust_avg is not none -%}
+      <span class="wn">{{ data.wind_gust_avg }}</span><span class="wu">&nbsp;mph gusts</span>
+    {%- endif %}
+  </div>
+
+  <div class="wind-stations">{{ data.wind_stations_count }}&nbsp;stations</div>
+</div>
+
+<!-- ============================================================
+     TODAY  —  high / low
+     ============================================================ -->
+{% if data.temp_high is not none or data.temp_low is not none %}
+<div class="daily-section">
+  Hi&nbsp;{% if data.temp_high is not none %}{{ data.temp_high }}&deg;{% else %}--{% endif %}
+  &nbsp;/&nbsp;
+  Lo&nbsp;{% if data.temp_low is not none %}{{ data.temp_low }}&deg;{% else %}--{% endif %}
+</div>
+{% endif %}
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<p class="footer">
+  {{ data.updated }}&nbsp;&bull;&nbsp;{{ refresh // 60 }}&nbsp;min
+</p>
+
+</body>
+</html>
