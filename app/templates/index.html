@@ -12,22 +12,13 @@
       background: #fff;
       color: #000;
     }
-    h1 {
-      font-size: 39pt;
-      text-align: center;
-      margin: 0 0 8px 0;
-      border-bottom: 3px solid #000;
-      padding-bottom: 4px;
-      letter-spacing: 2px;
-    }
-
     /* ---- Top row: icon (left) + feels-like temp (right) ---- */
     .top-row { width: 100%; border-collapse: collapse; }
     .icon-td  { width: 36%; text-align: center; vertical-align: middle; }
     .temp-td  { width: 64%; text-align: right;  vertical-align: middle; padding-right: 4px; }
 
     .feels-temp  { font-size: 156pt; font-weight: bold; line-height: 0.85; }
-    .feels-label { font-size: 33pt;  text-align: right; margin-top: 2px; color: #444; }
+    .feels-label { font-size: 20pt;  text-align: right; margin-top: 2px; color: #444; }
 
     /* Actual temp + humidity shown below the top row, centered */
     .feels-detail { font-size: 36pt; text-align: center; margin: 8px 0 4px 0; }
@@ -48,8 +39,8 @@
       border: 5px solid #000;
       -webkit-border-radius: 65px;
       border-radius: 65px;
-      margin: 0 auto;
     }
+
     .cl { position: absolute; font-size: 14pt; font-weight: bold; }
     .cl-n { top: 3px;    left: 0; right: 0; text-align: center; }
     .cl-s { bottom: 3px; left: 0; right: 0; text-align: center; }
@@ -84,8 +75,10 @@
       margin-top: -7px; margin-left: -7px;
     }
 
-    /* Wind speed numbers */
-    .wind-nums { margin-top: 8px; }
+    /* Wind layout table */
+    .wind-table { width: 100%; border-collapse: collapse; }
+    .wind-compass-td { width: 150px; text-align: center; vertical-align: middle; }
+    .wind-data-td { vertical-align: middle; padding-left: 14px; }
     .wn { font-size: 36pt; font-weight: bold; }
     .wu { font-size: 18pt; }
     .wind-stations { font-size: 22pt; margin-top: 4px; color: #555; }
@@ -113,8 +106,6 @@
   </style>
 </head>
 <body>
-
-<h1>WEATHER</h1>
 
 {% if data.error %}<p class="err">{{ data.error }}</p>{% endif %}
 
@@ -148,35 +139,37 @@
      WIND
      ============================================================ -->
 <div class="wind-section">
-
-  <div class="compass">
-    <span class="cl cl-n">N</span>
-    <span class="cl cl-s">S</span>
-    <span class="cl cl-e">E</span>
-    <span class="cl cl-w">W</span>
-    {% if data.wind_dir_deg is not none %}
-    <div class="needle"
-         style="-webkit-transform:rotate({{ data.wind_dir_deg }}deg);
-                transform:rotate({{ data.wind_dir_deg }}deg);">
-      <div class="needle-head"></div>
-    </div>
-    <div class="needle-dot"></div>
-    {% endif %}
-  </div>
-
-  <div class="wind-nums">
-    {% if data.wind_speed_avg is not none -%}
-      <span class="wn">{{ data.wind_speed_avg }}</span><span class="wu">&nbsp;mph</span>
-    {%- else -%}
-      <span class="wn">--</span>
-    {%- endif %}
-    &nbsp;&nbsp;
-    {% if data.wind_gust_avg is not none -%}
-      <span class="wn">{{ data.wind_gust_avg }}</span><span class="wu">&nbsp;mph gusts</span>
-    {%- endif %}
-  </div>
-
-  <div class="wind-stations">{{ data.wind_stations_count }}&nbsp;stations</div>
+  <table class="wind-table">
+    <tr>
+      <td class="wind-compass-td">
+        <div class="compass">
+          <span class="cl cl-n">N</span>
+          <span class="cl cl-s">S</span>
+          <span class="cl cl-e">E</span>
+          <span class="cl cl-w">W</span>
+          {% if data.wind_dir_deg is not none %}
+          <div class="needle"
+               style="-webkit-transform:rotate({{ data.wind_dir_deg }}deg);
+                      transform:rotate({{ data.wind_dir_deg }}deg);">
+            <div class="needle-head"></div>
+          </div>
+          <div class="needle-dot"></div>
+          {% endif %}
+        </div>
+      </td>
+      <td class="wind-data-td">
+        {% if data.wind_speed_avg is not none -%}
+          <span class="wn">{{ data.wind_speed_avg }}</span><span class="wu">&nbsp;mph</span>
+        {%- else -%}
+          <span class="wn">--</span>
+        {%- endif %}<br>
+        {% if data.wind_gust_avg is not none -%}
+          <span class="wn">{{ data.wind_gust_avg }}</span><span class="wu">&nbsp;mph gusts</span>
+        {%- endif %}<br>
+        <span class="wind-stations">{{ data.wind_stations_count }}&nbsp;stations</span>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <!-- ============================================================
