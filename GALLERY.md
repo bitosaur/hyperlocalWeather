@@ -23,6 +23,8 @@ The browser address bar shows `http://mbr:5000/` — the local hostname of the s
 
 ![Kindle Gen 3 showing the updated weather display](kindle1v2.jpg)
 
+Updated display with a slight layout variation to avoid a vertical scroll bar appearing on the right side of the Kindle browser.
+
 ---
 
 ## On the desk
