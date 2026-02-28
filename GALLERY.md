@@ -31,4 +31,4 @@ Updated display with a slight layout variation to avoid a vertical scroll bar ap
 
 ![Kindle on a wooden stand displaying live weather](kindle2.jpg)
 
-The Kindle sits on a wooden desktop stand. The white stacked-disc enclosure visible in the background is the **PWS radiation shield** — the weather station whose readings are being displayed on screen. The device is kept plugged in to avoid battery drain from the always-on screen and active Wi-Fi.
+The Kindle sits on a wooden desktop stand. The device is kept plugged in to avoid battery drain from the always-on screen and active Wi-Fi. I will be using a smart switch to charge it for 4 hours every other day. 
