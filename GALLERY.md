@@ -19,6 +19,12 @@ The browser address bar shows `http://mbr:5000/` — the local hostname of the s
 
 ---
 
+## Screen close-up (updated display)
+
+![Kindle Gen 3 showing the updated weather display](kindle1v2.jpg)
+
+---
+
 ## On the desk
 
 ![Kindle on a wooden stand displaying live weather](kindle2.jpg)
